@@ -4,6 +4,7 @@
   "description": "PoC Form for metadata",
   "main": "form.js",
   "scripts": {
+    "start": "form.js",
     "test": "test"
   },
   "repository": {
