@@ -13,7 +13,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: true });
 const textParser = bodyParser.text({ type: '*/*' });
 
 let registrationKey = 'e80764b1-d79b-4c61-9914-eafc677cc793';
-let formUrl = 'https://mediashuttle.herokuapp.com/form.html';
+let formUrl = 'form.html';
 
 const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     const requestTimestamp = new Date().toISOString();
