@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const querystring = require('querystring');
 const crypto = require('crypto');
 const rp = require('request-promise');
+const PORT = process.env.PORT || 5000
 
 const urlencodedParser = bodyParser.urlencoded({ extended: true });
 const textParser = bodyParser.text({ type: '*/*' });
@@ -39,7 +40,7 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     return `${requestUrl}?${algorithmParam}&${dateParam}&${signatureParam}`;
 };
 
-app.use('/show', urlencodedParser, function (req, res) {
+app.post('/show', urlencodedParser, function (req, res) {
   if (req.query.formUrl) {
     formUrl = req.query.formUrl;
   };
@@ -65,8 +66,8 @@ app.post('/process', textParser, function (req, res) {
   res.set('Location', signedUrl);
   res.status(307).end();
 });
-app.listen(443, () => {
-  console.log("Server is listening on port: 443");
+app.listen(PORT, () => {
+  console.log("Server is listening on port: ${ PORT }");
 });
 
 //  module.exports = Webtask.fromExpress(app);
