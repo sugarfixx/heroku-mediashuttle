@@ -43,12 +43,12 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
 app.use('/show', urlencodedParser, function (req, res) {
   if (req.query.formUrl) {
     formUrl = req.query.formUrl;
-  };
-
+  }
+  /*
   if (req.query.registrationKey) {
     registrationKey = req.query.registrationKey;
   }
-
+  */
   rp.get(formUrl)
     .then(form => {
       res.send(require('ejs').render(form, {
