@@ -40,6 +40,8 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     return `${requestUrl}?${algorithmParam}&${dateParam}&${signatureParam}`;
 };
 
+app.set("view engine", "ejs");
+
 app.use('/show', urlencodedParser, function (req, res) {
   if (req.query.formUrl) {
     formUrl = req.query.formUrl;
@@ -51,9 +53,9 @@ app.use('/show', urlencodedParser, function (req, res) {
   */
   rp.get(formUrl)
     .then(form => {
-      res.send(require('ejs').render(form, {
+      res.render(form, {
         redirectUrl: req.body.redirectUrl
-      }));
+      });
     })
     .catch(err => {
       res.status(500).send(err.message).end();
