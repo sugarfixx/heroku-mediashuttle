@@ -65,5 +65,8 @@ app.post('/process', textParser, function (req, res) {
   res.set('Location', signedUrl);
   res.status(307).end();
 });
+app.listen(1234, () => {
+  console.log("Server is listening on port: 1234");
+});
 
-module.exports = Webtask.fromExpress(app);
+//  module.exports = Webtask.fromExpress(app);
