@@ -50,9 +50,9 @@ app.use('/show', urlencodedParser, function (req, res) {
 });
 
 app.post('/process', textParser, function (req, res) {
-    const form = querystring.parse(req.body);
+    const form = req.body;
     const signedUrl = generateSignedUrl(form.redirectUrl, req.body, registrationKey);
-    api_helper.make_API_call('https://mediashuttle.j-srv.com/data', data)
+    api_helper.make_API_call('https://mediashuttle.j-srv.com/data', form)
         .then(response => {
             res.set('Location', signedUrl);
             res.status(307).end();
