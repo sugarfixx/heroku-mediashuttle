@@ -1,5 +1,7 @@
 const Express = require('express');
 const app = Express();
+const api_helper = require('./apiHelper');
+
 const bodyParser = require('body-parser');
 const querystring = require('querystring');
 const crypto = require('crypto');
@@ -35,8 +37,19 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     const signatureParam = `X-Sig-Signature=${signature}`;
     return `${requestUrl}?${algorithmParam}&${dateParam}&${signatureParam}`;
 };
+
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','html');
+
+app.get('/api', (req, res) => {
+    api_helper.make_API_call('https://mediashuttle.j-srv.com/data')
+        .then(response => {
+            res.json(response)
+        })
+        .catch(error => {
+            res.send(error)
+        })
+})
 
 app.use('/show', urlencodedParser, function (req, res) {
     res.render( __dirname + formUrl, {
