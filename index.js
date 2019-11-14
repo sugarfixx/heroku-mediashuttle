@@ -41,44 +41,23 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','html');
 
-app.get('/api', (req, res) => {
-
+app.post('/process', textParser, function (req, res) {
+    const form = querystring.parse(req.body);
+    const signedUrl = generateSignedUrl(form.redirectUrl, req.body, registrationKey);
     let data = {
         packageId : req.query.packageId,
         metadataId : req.query.metadataId
     };
     api_helper.make_API_call('https://mediashuttle.j-srv.com/data', data)
         .then(response => {
-            res.json(response)
+            res.set('Location', signedUrl);
+            res.status(307).end();
         })
         .catch(error => {
             res.send(error)
         })
-})
-
-app.use('/show', urlencodedParser, function (req, res) {
-    res.render( __dirname + formUrl, {
-        redirectUrl: req.body.redirectUrl,
-        packageId : req.body.packageId
-    });
 });
-
-app.post('/process', textParser, function (req, res) {
-  const form = querystring.parse(req.body);
-  const signedUrl = generateSignedUrl(form.redirectUrl, req.body, registrationKey);
-  res.set('Location', signedUrl);
-  res.status(307).end();
-});
-
-app.get("/", (req, res) => {
-    console.log( __dirname + formUrl);
-    res.render( __dirname + formUrl, {
-        redirectUrl: 'detta-gitt',
-        packageId : '123456789'
-    });
-});
-
 
 app.listen(PORT, () => {
-  console.log("Server is listening on port:", PORT);
+    console.log("Server is listening on port:", PORT);
 });
