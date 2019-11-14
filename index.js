@@ -43,13 +43,15 @@ app.set('view engine','html');
 
 app.post('/process', textParser, function (req, res) {
     const form = querystring.parse(req.body);
-    const signedUrl = generateSignedUrl(form.redirectUrl, req.body, registrationKey);
+    const signedUrl = generateSignedUrl(req.query.redirectUrl, req.body, registrationKey);
     let data = {
         packageId : req.query.packageId,
-        metadataId : req.query.metadataId
+        metadataId : req.query.metadataId,
+        form : form
     };
     api_helper.make_API_call('https://mediashuttle.j-srv.com/data', data)
         .then(response => {
+
             res.set('Location', signedUrl);
             res.status(307).end();
         })
