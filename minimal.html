@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            margin: 20px;
+        }
+
+        .nav-tabs>li.active, .nav-tabs>li.active:focus {
+            border-bottom: 3px solid #cc181e;
+            color: black;
+        }
+
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+            border: none !important;
+            background-color: transparent !important;
+            color: black;
+        }
+
+        .nav-tabs>li>a {
+            color: black;
+        }
+
+        .tab-content {
+            margin-top: 20px;
+        }
+        .form-control {
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+<h3> <i style="color:#337ab7" class="fa fa-pencil-square"></i> Upload Details</h3>
+<p>Please provide details about the video file you are uploading below.</p>
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#basic" role="tab" data-toggle="tab">Basic Info</a></li>
+    <li role="presentation"><a href="#advanced" role="tab" data-toggle="tab">Advanced</a></li>
+</ul>
+
+<form action="process" method="post">
+    <input name="redirectUrl" type="hidden" value="<%= redirectUrl %>"/>
+    <input name="packageId" type="hidden" value="<%= packageId %>"/>
+    <input name="metadataId" type="hidden" value="<%= metadataId %>"/>
+
+    <div class="form-group">
+        <button type="submit" style="font-size: 20px" class="btn btn-primary pull-right">Continue</button>
+    </div>
+</form>
+<br/>
+</body>
+</html>

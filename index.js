@@ -11,7 +11,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: true });
 const textParser = bodyParser.text({ type: '*/*' });
 
 let registrationKey = 'e80764b1-d79b-4c61-9914-eafc677cc793';
-let formUrl = '/form.html';
+let formUrl = '/minimal.html';
 
 const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     const requestTimestamp = new Date().toISOString();
@@ -41,17 +41,19 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','html');
 
+app.use('/show', urlencodedParser, function (req, res) {
+    res.render( __dirname + formUrl, {
+        redirectUrl: req.body.redirectUrl,
+        packageId : req.body.packageId,
+        metadataId : req.body.metadataId
+    });
+});
+
 app.post('/process', textParser, function (req, res) {
     const form = querystring.parse(req.body);
-    const signedUrl = generateSignedUrl(req.query.redirectUrl, req.body, registrationKey);
-    let data = {
-        packageId : req.query.packageId,
-        metadataId : req.query.metadataId,
-        form : form
-    };
+    const signedUrl = generateSignedUrl(form.redirectUrl, req.body, registrationKey);
     api_helper.make_API_call('https://mediashuttle.j-srv.com/data', data)
         .then(response => {
-
             res.set('Location', signedUrl);
             res.status(307).end();
         })
