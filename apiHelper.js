@@ -6,9 +6,13 @@ module.exports = {
     ** which gets resolved or rejected based
     ** on the result from the API
     */
-    make_API_call : function(url){
+    make_API_call : function(url, data){
         return new Promise((resolve, reject) => {
-            request.post(url, { json: true }, (err, res, body) => {
+            request.post({
+                headers: {'content-type' : 'application/json'},
+                url : url,
+                body : JSON.stringify(data)
+            }, (err, res, body) => {
                 if (err) reject(err)
                 resolve(body)
             });

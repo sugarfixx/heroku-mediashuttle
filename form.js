@@ -42,7 +42,8 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine','html');
 
 app.get('/api', (req, res) => {
-    api_helper.make_API_call('https://mediashuttle.j-srv.com/data')
+    let data = {"myKey" : "hasAValue"};
+    api_helper.make_API_call('https://mediashuttle.j-srv.com/data', data)
         .then(response => {
             res.json(response)
         })
