@@ -2,7 +2,7 @@
   "name": "herokumediashuttle",
   "version": "1.0.0",
   "description": "PoC Form for metadata",
-  "main": "form.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "test"
@@ -28,7 +28,6 @@
     "express": "^4.17.1",
     "querystring": "^0.2.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5",
-    "webtask-tools": "^3.4.1"
+    "request-promise": "^4.2.5"
   }
 }
